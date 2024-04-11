@@ -1,9 +1,10 @@
 import fetch from 'node-fetch';
 import express from 'express';
-const app = express();
+import dotenv from 'dotenv';
 
-const clientId = '4e5406f22b95404a9c9700a169496208';
-const clientSecret = '58d5ba0eaa2a4213a8a186dfabf31b18';
+const app = express();
+dotenv.config();
+
 // const query = 'J Cole';
 app.get(`/user/search`, (req, res) => {
   const query = req.query.query;
@@ -13,7 +14,7 @@ app.get(`/user/search`, (req, res) => {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`
+    body: `grant_type=client_credentials&client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}`
   }).then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
